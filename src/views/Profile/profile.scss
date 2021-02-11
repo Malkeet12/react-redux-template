@@ -1,0 +1,12 @@
+@import "styles/variables";
+@import "styles/mixins";
+.profile {
+  @include fullWidthHeight;
+  padding: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .name {
+    font-size: 4rem;
+  }
+}

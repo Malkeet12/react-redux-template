@@ -1,8 +1,41 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { createStore, applyMiddleware } from "redux";
+import logger from "redux-logger";
+import freeze from "redux-freeze";
+import thunk from "redux-thunk";
+import promise from "redux-promise-middleware";
+import { reducers } from "./reducers";
 
-export default configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
+/**
+ *  This defines base configuration for setting up redux with react.
+ *  All the middlewares are defined here and base store is created for provider.
+ */
+
+let middlewares = [];
+
+//for promises, since we are using axios for networking
+middlewares.push(promise);
+
+//for async operations, network calls
+middlewares.push(thunk);
+
+//smart console logging of actions
+console.log(process.env);
+if (process.env.REACT_APP_NODE_ENV !== "production") {
+  // middlewares.push(logger);
+}
+
+// add freeze dev middleware
+// this prevents state from being mutated anywhere in the app during dev
+if (process.env.REACT_APP_NODE_ENV !== "production") {
+  middlewares.push(freeze);
+}
+
+// apply middlewares
+let middleware = applyMiddleware(...middlewares);
+
+// create store
+const store = createStore(reducers, middleware);
+window.store = store;
+
+// export
+export { store };

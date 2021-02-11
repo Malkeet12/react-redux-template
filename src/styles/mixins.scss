@@ -1,0 +1,20 @@
+/* Define mixin with two arguments */
+@mixin lineClamp($maxLines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $maxLines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+@mixin fullWidthHeight {
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}

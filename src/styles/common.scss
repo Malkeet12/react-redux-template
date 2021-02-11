@@ -1,0 +1,25 @@
+@import "styles/mixins";
+// to override user agent style sheet
+* {
+  font-family: Roboto, serif;
+}
+
+:root {
+  --unread-notifications-height: 0px;
+}
+
+html {
+  box-sizing: border-box;
+  line-height: 1.4;
+  height: 100vh;
+  width: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  @include fullWidthHeight;
+}

@@ -1,0 +1,40 @@
+@import 'stylesheets/_variables';
+@import 'stylesheets/_variables_new';
+
+.custom-select-container {
+  width: 100%;
+
+  &.no-border select {
+    border: 0;
+  }
+
+  select {
+    border: solid 1px #34353f;
+    border-radius: 4px;
+    background: $black;
+    color: $font-color-primary;
+    font-size: $font-size-small;
+    line-height: 1.8rem;
+    padding: 1.2rem;
+    outline: none;
+    height: 4.4rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:focus,
+    &:hover,
+    &:active {
+      outline: none;
+    }
+  }
+
+  .select-label {
+    text-transform: uppercase;
+    font-size: $font-size-xsmall;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    text-align: left;
+    color: #b4b5c1;
+    letter-spacing: 1px;
+  }
+}

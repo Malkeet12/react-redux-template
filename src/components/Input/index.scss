@@ -1,0 +1,49 @@
+@import 'stylesheets/_variables_new';
+
+.custom-input-container {
+  width: 100%;
+
+  &.no-border {
+    input {
+      border: 0;
+    }
+  }
+
+  input {
+    border: solid 1px map_get($grey, '30');
+    border-radius: 12px;
+    color: $font-color-primary;
+    font-size: $font-size-normal;
+    font-weight: normal;
+    line-height: 1.8rem;
+    padding: 1.2rem;
+    outline: none;
+    background: $black;
+
+    &:focus,
+    &:hover,
+    &:active {
+      outline: none;
+    }
+
+    &:read-only {
+      background: map_get($grey, '25');
+      border: solid 0.1rem map_get($grey, '30');
+    }
+
+    &:disabled {
+      background: $black;
+      border: 1px solid map_get($grey, '40');
+    }
+  }
+
+  .input-label {
+    text-transform: uppercase;
+    font-size: map_get($size, '4');
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    text-align: left;
+    color: map_get($grey, '5');
+    letter-spacing: 0.1rem;
+  }
+}

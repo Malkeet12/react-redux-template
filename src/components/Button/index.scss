@@ -1,0 +1,71 @@
+@import "stylesheets/_variables";
+
+$btn-blue-color: map_get($blue, "15");
+$btn-blue-hover-color: map_get($blue, "13");
+$disabled-btn-bg-color: map_get($grey, "25");
+$outlined-light-grey-color: map_get($grey, "5");
+$outlined-dark-grey-color: map_get($grey, "45");
+
+.custom-btn {
+  border: none;
+  outline: none;
+  background-color: $btn-blue-color;
+  color: $font-color-primary;
+  padding: 1.2rem 2.4rem;
+  border-radius: map_get($size, "22");
+  font-size: $font-size-normal;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .button-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .label {
+      text-align: left;
+    }
+
+    .icon {
+      display: flex;
+      align-items: center;
+
+      &.left {
+        margin-right: 1.5rem;
+      }
+
+      img,
+      svg {
+        height: 1.6rem;
+        width: auto;
+      }
+
+      &.right {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+
+  &.round {
+    border-radius: 3rem;
+  }
+
+  &:hover {
+    background-color: $btn-blue-hover-color;
+    cursor: pointer;
+  }
+
+  &.disabled {
+    cursor: auto;
+    background: $disabled-btn-bg-color;
+    color: $font-color-secondary;
+
+    &:hover {
+      background: $disabled-btn-bg-color;
+    }
+  }
+}
