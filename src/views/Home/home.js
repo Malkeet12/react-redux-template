@@ -7,79 +7,76 @@ import { Link } from "react-router-dom";
 
 class Home extends React.Component {
   state = {
-    id: "",
-    task: "",
+    collapsedMap: {},
+    dir: [
+      {
+        name: "my-app",
+        value: [
+          {
+            name: "node_modules",
+            type: "folder",
+            value: [
+              {
+                name: ".bin",
+                type: "folder",
+                value: [
+                  {
+                    name: "abc",
+                    value: [{ name: "accorn", type: "file" }],
+                    type: "folder",
+                  },
+                ],
+              },
+            ],
+          },
+          { name: "2.js", type: "file" },
+          {
+            name: "public",
+            value: [{ name: "1.js", type: "file" }],
+            type: "folder",
+          },
+        ],
+        type: "folder",
+      },
+    ],
   };
-  componentDidMount = () => {
-    this.props.getTasks();
-  };
-  navigateToProfile = (uId) => {
-    let path = PATHS.PROFILE;
-    path = path.replace(":profile_id?", uId || "");
-    return this.props.history.push({
-      pathname: path,
-    });
-  };
-  handleInputChange = (e, key) => {
-    let newValue = e.target.value;
-    this.setState({ [key]: newValue });
-  };
-  addTask = () => {
-    let { id, task } = this.state;
-    this.props.addTask({ id, task });
-  };
-  render() {
-    let { id, task } = this.state;
-    let { home = {} } = this.props;
-    let { tasks } = home;
-    // let { apiTracker } = this.props.common;
-    // let tListApiTracker = apiTracker[API_URL.getTasks];
-    return (
-      <div className="home">
-        <img src={logo} className="logo" alt="logo" />
 
-        <TextField
-          value={id}
-          required
-          label="Required"
-          onChange={(e) => this.handleInputChange(e, "id")}
-        />
-        <TextField
-          value={task}
-          required
-          label="Required"
-          onChange={(e) => this.handleInputChange(e, "task")}
-        />
-        <Button onClick={this.addTask} variant="contained" color="primary">
-          Add task
-        </Button>
-        {tasks && this.buildList(tasks)}
-        <div>
-          <Button
-            onClick={() => this.navigateToProfile("malkeet-singh")}
-            variant="contained"
-            color="primary"
-          >
-            Profile
-          </Button>
-          <li>
-            <Link to={PATHS.TOPICS}>Topics</Link>
-          </li>
-        </div>
-      </div>
-    );
+  render() {
+    let { home = {} } = this.props;
+    let { dir } = this.state;
+
+    return <div className="home">{this.buildList(dir)}</div>;
   }
-  buildList = (tasks) => {
-    if (!tasks) {
-      return;
-    }
-    return (
-      <ul>
-        {Object.keys(tasks)?.map((taskId) => (
-          <li key={taskId}>{tasks[taskId]["task"]}</li>
-        ))}
-      </ul>
-    );
+
+  toggle = (item) => {
+    let collapsedMapCopy = Object.assign({}, this.state.collapsedMap);
+    collapsedMapCopy[item] = !collapsedMapCopy[item];
+    this.setState({ collapsedMap: collapsedMapCopy });
+  };
+  buildList = (list) => {
+    let { collapsedMap } = this.state;
+    return list.map((item) => {
+      return (
+        <ul key={item.key}>
+          <div onClick={() => this.toggle(item.name)}>{item.name}</div>
+
+          {collapsedMap[item.name] &&
+            item.value &&
+            item.value.map((item) => {
+              if (item.type === "file") {
+                return (
+                  <li key={item.name} className="files">
+                    {item.name}
+                  </li>
+                );
+              }
+              if (item.type === "folder") {
+                return this.buildList([item]);
+              }
+            })}
+        </ul>
+      );
+    });
   };
 }
 
